@@ -22,7 +22,6 @@ class OSSAdapter extends BaseAdapter {
     return this.getUniqueFileName(file, targetDir).then((filename) => {
       return client.put(filename, fs.createReadStream(file.path))
     }).then((result) => {
-      console.log('OSS: result', result)
       if (origin) {
         // not using path.join, because origin may contains 'https://'
         return origin + result.name
@@ -57,7 +56,20 @@ class OSSAdapter extends BaseAdapter {
   }
 
   read(options) {
-    return Promise.reject('not implemented')
+    // remove trailing slashes
+    options = options || {}
+    options.path = (options.path || '').replace(/\/$|\\$/, '');
+
+    var client = this.client
+
+    var prefix = this.options.prefix || '/'
+    var targetPath = path.join(prefix, options.path)
+
+    return client.get(targetPath).then((res) => {
+      return res.content
+    }).catch((e) => {
+      return Promise.reject(e)
+    })
   }
 
 }
