@@ -9,11 +9,12 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:MT-Libraries/ghost-oss-store.git"
-  },  
+  },
   "author": "Thonatos.Yang",
   "license": "MIT",
   "dependencies": {
     "ali-oss": "^4.4.4",
-    "bluebird": "^3.4.6"
+    "bluebird": "^3.4.6",
+    "ghost-storage-base": "0.0.1"
   }
 }
